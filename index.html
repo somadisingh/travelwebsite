@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Travel Website Concept 🧭</title>
+<link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <style>
+
+      html {
+        box-sizing: border-box;
+        background: #ffc600;
+        font-family: 'helvetica neue'
+        font-size: 20px;
+        font-weight: 200;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+
+      .panels {
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex; /*panels stacked side by side*/
+      }
+
+      .panel {
+        background: #6B0F9C;
+        box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
+        color: white;
+        text-align: center;
+        align-items: center;
+        /* safari transitionend event.propertyName === flex*/
+        /* chrome + FF transitionend event.propertyName === flex-grow */
+
+        transition: /*main transition effect*/
+          font-size 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
+          flex 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
+          background 0.2s;
+        font-size: 20px;
+        background-size: cover;
+        background-position: center;
+        flex: 1; /*each of the panels are going to evenly distribute the available space among themselves*/
+        justify-content: center; /*brings the written content of each of the panels to their respective center*/
+        align-items: center; /* does the same as above */
+        display: flex; /* brings the written content in the middle of the panel, but they are arranged sideways*/
+        flex-direction: column; /*the content is arranged paragraph-wise center aligned*/
+      }
+
+      .panel1 {background-image:url("./hiker.jpg");}
+      .panel2 {background-image:url("./airplane.jpg");}
+      .panel3 {background-image:url("./tent.jpg");}
+      .panel4 {background-image:url("./hill.jpg");}
+      .panel5 {background-image:url("./snow.jpg");}
+
+      /*flex items*/
+
+      .panel > * {
+        margin:0;
+        width: 100%;
+        transition: transform 0.5s;
+        flex: 1 0 auto; /* first word is on the top, second in the middle & third word at the bottom */
+        display: flex;
+        justify-content: center; /*all three words are now in the middle from top to bottom*/
+        align-items: center;
+      }
+
+      .panel > *:first-child {transform: translateY(-100%);} /*each panel's first child is hidden away*/
+      .panel.open-active > *:first-child {transform: translateY(0);} /*when the panel is active, the hidden first child shows up*/
+
+      .panel > *:last-child {transform: translateY(100%);}
+      .panel.open-active > *:last-child {transform: translateY(0);}
+
+
+      .panel p {
+        text-transform: uppercase;
+        font-family: 'Amatic SC', cursive;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+        font-size: 2em;
+      }
+
+      .panel p:nth-child(2) {
+        font-size: 4em;
+      }
+
+      .panel.open { /*when the panel opens the font size of the middle child increases & panel takes up 5 times the extra space*/
+        flex: 5;
+        font-size: 40px;
+      }
+
+      .cta {
+        color: white;
+        text-decoration: none;
+      }
+
+    </style>
+
+
+<div class="panels">
+  <div class="panel panel1">
+    <p>Hey</p>
+    <p>Let's</p>
+    <p>Dance</p>
+  </div>
+
+<div class="panel panel2">
+  <p>Give</p>
+  <p>Take</p>
+  <p>Receive</p>
+</div>
+
+<div class="panel panel3">
+  <p>Experience</p>
+  <p>It</p>
+  <p>Today</p>
+</div>
+
+<div class="panel panel4">
+  <p>Give</p>
+  <p>All</p>
+  <p>You Can</p>
+</div>
+
+ <div class="panel panel5">
+   <p>Life</p>
+   <p>In</p>
+   <p>Motion</p>
+ </div>
+</div>
+
+
+<script>
+  const panels = document.querySelectorAll('.panel'); //selects all the panels individually
+
+  function toggleOpen() {  //animates the panels, highlight and expands
+    this.classList.toggle('open'); //triggers css class .open
+  }
+
+  function toggleActive(e) { //event is passed to the function
+    console.log(e.propertyName); //displays all the properties which are being transitioned in console. refer to .panel.open
+    if(e.propertyName.includes('flex')) { //if the transitioned properties contain 'flex'
+      this.classList.toggle('open-active'); //call css class 'open-active'
+    }
+  }
+
+  panels.forEach(panel => panel.addEventListener('click', toggleOpen)); //when mouse pointer is on the panel, call toggleopen function
+  panels.forEach(panel => panel.addEventListener('transitionend', toggleActive)); //when toggleOpen function is triggered and transition ends, call toggleActive
+
+
+</script>
+
+  </body>
+</html>
